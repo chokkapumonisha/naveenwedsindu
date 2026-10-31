@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -150,124 +149,138 @@ h2 {
   transform:none;
 }
 
-/* ===== OPENING REVEAL ===== */
+/* ===== FULLPAGE SANKU CHAKRA NAMALU SPLIT SCREEN ===== */
 #reveal {
-  position:fixed;
-  inset:0;
-  z-index:100;
-  background:radial-gradient(circle at 50% 40%,#1F4D2B,#0F2E1A 70%);
-  display:grid;
-  place-items:center;
-  transition:opacity .6s ease;
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 999;
+  cursor: pointer;
+  background: radial-gradient(circle at center, #1b4d2e 0%, #0c2b18 60%, #071c0f 100%);
+  overflow: hidden;
+  transition: background-color 1.5s ease, opacity 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+  -webkit-tap-highlight-color: transparent;
+}
+
+#reveal::before {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  border: 1.5px solid rgba(201, 150, 43, 0.5);
+  pointer-events: none;
+  z-index: 10;
+  transition: opacity 0.8s ease;
+}
+
+/* Container occupies entire viewport */
+.split-curtain-container {
+  position: absolute;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+.split-wing {
+  position: absolute;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 1.6s cubic-bezier(0.22, 1, 0.36, 1), opacity 1.3s ease;
+  will-change: transform, opacity;
+}
+
+/* Full-scale image rendering */
+.split-wing .namam-img {
+  width: 95vw;
+  height: 80vh;
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.5));
+}
+
+/* Exact 50/50 vertical division */
+.split-left {
+  clip-path: polygon(0% 0%, 50% 0%, 50% 100%, 0% 100%);
+}
+
+.split-right {
+  clip-path: polygon(50% 0%, 100% 0%, 100% 100%, 50% 100%);
+}
+
+/* Text floating gracefully at the bottom */
+.opener-meta {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  z-index: 20;
+  text-align: center;
+  pointer-events: none;
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.opener-meta2 {
+  bottom: 6vh;
+}
+
+.opener-meta1 {
+  top: 6vh;
+}
+
+.opener-top {
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(20px, 4vw, 30px);
+  color: var(--marigold);
+  letter-spacing: 0.12em;
+  margin-bottom: 4px;
+}
+
+.opener-mantra {
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(22px, 4.5vw, 34px);
+  color: #735c23;
+  letter-spacing: 0.08em;
+}
+
+.opener-hint {
+  font-size: 13px;
+  letter-spacing: 0.25em;
+  color: var(--gold);
+  margin-top: 14px;
+  animation: pulse-hint 2s infinite ease-in-out;
+}
+
+@keyframes pulse-hint {
+  0%, 100% { opacity: 0.5; transform: scale(0.98); }
+  50% { opacity: 1; transform: scale(1.02); }
+}
+
+/* Slide smoothly completely off-screen */
+#reveal.open {
+  background-color: transparent;
+  pointer-events: none;
+}
+
+#reveal.open .split-left {
+  transform: translateX(-100%);
+  opacity: 0;
+}
+
+#reveal.open .split-right {
+  transform: translateX(100%);
+  opacity: 0;
+}
+
+#reveal.open .opener-meta,
+#reveal.open::before {
+  opacity: 0;
+  transform: translateY(20px);
 }
 
 #reveal.gone {
-  opacity:0;
-  pointer-events:none;
-}
-
-.env {
-  position:relative;
-  width:min(86vw,380px);
-  aspect-ratio:1.5;
-  background:linear-gradient(160deg,#FFF1C9,#F2D58B);
-  border:2px solid var(--gold);
-  border-radius:6px;
-  box-shadow:0 20px 50px rgba(0,0,0,.5);
-}
-
-.flap {
-  position:absolute;
-  left:0;
-  right:0;
-  top:0;
-  height:60%;
-  background:linear-gradient(#E9C25F,#D9A93C);
-  clip-path:polygon(0 0,100% 0,50% 100%);
-  transform-origin:top;
-  transition:transform .8s ease .45s;
-  z-index:2;
-}
-
-.open .flap {transform:rotateX(180deg)}
-
-.seal {
-  position:absolute;
-  left:50%;
-  top:46%;
-  width:84px;
-  height:84px;
-  margin:-42px 0 0 -42px;
-  border-radius:50%;
-  border:3px solid #7d0c28;
-  background:radial-gradient(circle at 35% 30%,#e0305a,#B3123A 60%,#7d0c28);
-  color:#FFE9A8;
-  font:400 28px "Great Vibes",cursive;
-  cursor:pointer;
-  z-index:3;
-  animation:pulse 2.4s ease-in-out infinite;
-  transition:opacity .4s;
-}
-
-.open .seal {opacity:0;animation:none}
-
-@keyframes pulse {
-  50% {transform:scale(1.06)}
-}
-
-.ring {
-  position:absolute;
-  left:50%;
-  top:46%;
-  width:90px;
-  height:90px;
-  margin:-45px;
-  border-radius:50%;
-  border:3px solid var(--marigold);
-  opacity:0;
-  z-index:1;
-}
-
-.open .ring {animation:ring .9s ease-out forwards}
-
-@keyframes ring {
-  from {opacity:.9;transform:scale(1)}
-  to {opacity:0;transform:scale(7)}
-}
-
-.flash {
-  position:absolute;
-  inset:0;
-  background:#fff;
-  opacity:0;
-  pointer-events:none;
-}
-
-.open .flash {animation:fl .7s ease 1s forwards}
-
-@keyframes fl {
-  40% {opacity:.7}
-  100% {opacity:0}
-}
-
-.tapme {
-  position:absolute;
-  bottom:14%;
-  color:#FFE9A8;
-  letter-spacing:.2em;
-  font-size:14px;
-}
-
-.spark {
-  position:absolute;
-  left:50%;
-  top:46%;
-  width:8px;
-  height:8px;
-  background:var(--marigold);
-  clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%);
-  pointer-events:none;
-  z-index:4;
+  display: none !important;
 }
 
 /* ===== HERO ===== */
@@ -405,7 +418,6 @@ h2 {
   50% {transform:rotate(5deg) translateX(12px)}
 }
 
-/* Congratulations message */
 .wish-toast {
   position:fixed;
   bottom:28px;
@@ -687,42 +699,18 @@ footer .names {
   pointer-events:none;
 }
 
-.lant {
-  position:fixed;
-  bottom:-80px;
-  width:34px;
-  height:46px;
-  border-radius:40% 40% 30% 30%;
-  background:radial-gradient(circle at 50% 60%,#fff2b0,#F2B01E 60%,#c96a10);
-  box-shadow:0 0 24px 8px rgba(242,176,30,.6);
-  pointer-events:none;
-  z-index:55;
-  animation:lift 7s ease-out forwards;
-}
-
-@keyframes lift {
-  to {
-    transform:translate3d(var(--sx,20px),-115vh,0);
-    opacity:0;
-  }
-}
-
 /* ===== REDUCED MOTION ===== */
 @media(prefers-reduced-motion:reduce) {
-  .fx,#glow,.lant,.hint,.seal {
+  .fx,#glow,.hint,.split-wing,#reveal,.opener-meta {
     display:none!important;
     animation:none!important;
+    transition:none!important;
   }
 
   .rv {
     opacity:1;
     transform:none;
     transition:none;
-  }
-
-  #reveal *,#reveal {
-    transition:none!important;
-    animation:none!important;
   }
 
   .wish-balloon,.balloon-art {
@@ -734,10 +722,9 @@ footer .names {
 
 <body class="lock">
 
-<!-- ===== SVG LIBRARY ===== -->
+<!-- ===== SVG SYMBOL DEFS ===== -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
 <defs>
-
 <symbol id="headG" viewBox="0 0 150 170">
   <ellipse cx="75" cy="150" rx="44" ry="24" fill="#F3E2B3"/>
   <rect x="64" y="108" width="22" height="22" fill="#B27447"/>
@@ -783,24 +770,36 @@ footer .names {
   <circle cx="48" cy="7" r="2.5" fill="#F2B01E"/>
   <circle cx="72" cy="7" r="2.5" fill="#F2B01E"/>
 </symbol>
-
 </defs>
 </svg>
-
-<!-- ===== 5.1 OPENING REVEAL ===== -->
-<div id="reveal">
-  <div class="env">
-    <div class="flap"></div>
-    <div class="ring"></div>
-    <button class="seal" id="seal" aria-label="Open the invitation">N&amp;I</button>
+ 
+<!-- ===== FULLPAGE SANKU CHAKRA NAMALU SPLIT OPENER ===== -->
+<div id="reveal" role="button" tabindex="0" aria-label="Tap to open invitation">
+  <div class="opener-meta opener-meta1">
+    <p class="opener-mantra">Om Namo Venkatesaya</p>
   </div>
-  <p class="tapme">TAP THE SEAL TO OPEN</p>
-  <div class="flash"></div>
+  <div class="split-curtain-container">
+    
+    <!-- LEFT HALF: Stretches across full screen, displays left half of image -->
+    <div class="split-wing split-left">
+      <img src="namam.png" alt="Sacred Sanku Chakra Namam Left" class="namam-img">
+    </div>
+
+    <!-- RIGHT HALF: Stretches across full screen, displays right half of image -->
+    <div class="split-wing split-right">
+      <img src="namam.png" alt="Sacred Sanku Chakra Namam Right" class="namam-img">
+    </div>
+
+  </div>
+
+  <div class="opener-meta opener-meta2">
+    <p class="opener-hint">✨ TOUCH ANYWHERE TO OPEN ✨</p>
+  </div>
 </div>
 
 <main id="top">
 
-<!-- ===== 5.2 HERO ===== -->
+<!-- ===== HERO ===== -->
 <section class="hero">
   <svg class="hbg" id="hbg" viewBox="0 0 400 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
     <g fill="#F2B01E" opacity=".55">
@@ -835,7 +834,7 @@ footer .names {
   </div>
 </section>
 
-<!-- ===== 5.3 COUPLE ===== -->
+<!-- ===== COUPLE ===== -->
 <section>
   <svg class="orn rv"><use href="#orn"/></svg>
   <p class="eyebrow rv">The Couple</p>
@@ -856,7 +855,7 @@ footer .names {
   </div>
 </section>
 
-<!-- ===== 5.4 COUNTDOWN ===== -->
+<!-- ===== COUNTDOWN ===== -->
 <section id="countdown">
   <p class="eyebrow rv">Counting Down</p>
   <h2 class="rv">Until We Say I Do</h2>
@@ -871,7 +870,7 @@ footer .names {
   <p class="jm" id="jm" hidden>Just Married</p>
 </section>
 
-<!-- ===== 5.5 VENUE ===== -->
+<!-- ===== VENUE ===== -->
 <section>
   <p class="eyebrow rv">The Details</p>
   <h2 class="rv">Where &amp; When</h2>
@@ -902,7 +901,6 @@ footer .names {
   <a class="map rv" target="_blank" rel="noopener"
      href="https://maps.app.goo.gl/URTG2hzScuYbHH7E7"
      aria-label="Open venue in Google Maps">
-
     <svg viewBox="0 0 400 240" role="img" aria-label="Map showing Function Hall, Amalapuram">
       <rect width="400" height="240" fill="#F6EBC8"/>
       <path d="M-10 170C90 150 150 90 250 100S380 40 420 50" stroke="#fff" stroke-width="16" fill="none"/>
@@ -918,7 +916,7 @@ footer .names {
   </a>
 </section>
 
-<!-- ===== 5.6 EVENTS ===== -->
+<!-- ===== CELEBRATIONS ===== -->
 <section>
   <p class="eyebrow rv">Celebrations</p>
   <h2 class="rv">The Events</h2>
@@ -948,39 +946,35 @@ footer .names {
   </div>
 </section>
 
-<!-- ===== 5.7 ALBUM ===== -->
+<!-- ===== PHOTO ALBUM ===== -->
 <section>
   <p class="eyebrow rv">Moments</p>
   <h2 class="rv">Photo Album</h2>
 
   <div class="gal" id="gal">
     <button class="rv" data-i="0">
-      <img src="img1.jpeg" alt="Naveen and Indu standing together in a garden" style="object-position:50% 18%" loading="lazy">
+      <img src="img1.jpeg" alt="Couple photo 1" style="object-position:50% 18%" loading="lazy">
     </button>
-
     <button class="rv" data-i="1" style="--d:.1s">
-      <img src="img2.jpeg" alt="Naveen and Indu seated with rose garlands" style="object-position:50% 45%" loading="lazy">
+      <img src="img2.jpeg" alt="Couple photo 2" style="object-position:50% 45%" loading="lazy">
     </button>
-
     <button class="rv" data-i="2" style="--d:.2s">
-      <img src="img3.jpeg" alt="Naveen and Indu standing in their home" style="object-position:50% 28%" loading="lazy">
+      <img src="img3.jpeg" alt="Couple photo 3" style="object-position:50% 28%" loading="lazy">
     </button>
-
     <button class="rv" data-i="3">
-      <img src="img4.jpeg" alt="Naveen and Indu smiling with flower garlands" style="object-position:50% 50%" loading="lazy">
+      <img src="img4.jpeg" alt="Couple photo 4" style="object-position:50% 50%" loading="lazy">
     </button>
-
     <button class="rv" data-i="4" style="--d:.1s">
-      <img src="img5.jpeg" alt="Indu smiling in a pink saree" style="object-position:50% 22%" loading="lazy">
+      <img src="img5.jpeg" alt="Couple photo 5" style="object-position:50% 22%" loading="lazy">
     </button>
   </div>
 </section>
 
 </main>
 
-<!-- ===== 5.8 FOOTER ===== -->
+<!-- ===== FOOTER ===== -->
 <footer>
-  <svg class="cpl rv" viewBox="0 0 300 200" role="img" aria-label="Illustration of Naveen and Indu">
+  <svg class="cpl rv" viewBox="0 0 300 200" role="img" aria-label="Illustration of couple">
     <g transform="translate(20 10) scale(.9)">
       <use href="#headG" width="150" height="170"/>
     </g>
@@ -1023,9 +1017,8 @@ const $ = s => document.querySelector(s);
 const RM = matchMedia("(prefers-reduced-motion:reduce)").matches;
 const MAPS = "https://maps.app.goo.gl/URTG2hzScuYbHH7E7";
 
-/* ===== 5.1 REVEAL ===== */
+/* ===== SPLIT OPENER REVEAL ===== */
 const rev = $("#reveal");
-const seal = $("#seal");
 let opened = false;
 
 function openInv() {
@@ -1034,54 +1027,28 @@ function openInv() {
 
   rev.classList.add("open");
 
-  if (!RM) {
-    const e = rev.querySelector(".env");
+  // Unlock body scroll and trigger internal page builds
+  document.body.classList.remove("lock");
+  startFx();
+  build();
 
-    for (let i = 0; i < 26; i++) {
-      const p = document.createElement("i");
-      p.className = "spark";
-      e.appendChild(p);
-
-      const a = Math.random() * 6.28;
-      const r = 80 + Math.random() * 140;
-
-      p.animate([
-        {transform:"translate(0,0) scale(1)",opacity:1},
-        {
-          transform:`translate(${Math.cos(a)*r}px,${Math.sin(a)*r}px) scale(.2)`,
-          opacity:0
-        }
-      ], {
-        duration:1100,
-        delay:500 + Math.random()*200,
-        easing:"ease-out",
-        fill:"both"
-      });
-    }
-  }
-
+  // Remove opener from DOM after smooth slide completes
   setTimeout(() => {
     rev.classList.add("gone");
-    document.body.classList.remove("lock");
-    startFx();
-    build();
-  }, RM ? 0 : 1700);
-
-  setTimeout(() => rev.remove(), RM ? 50 : 2400);
+    rev.remove();
+  }, 1600);
 }
 
-seal.addEventListener("click",openInv);
+rev.addEventListener("click", openInv);
 
-addEventListener("keydown",e => {
+addEventListener("keydown", e => {
   if (!opened && (e.key === "Enter" || e.key === " ")) {
     e.preventDefault();
     openInv();
   }
 });
 
-seal.focus();
-
-/* ===== 5.13 SCROLL REVEAL ===== */
+/* ===== SCROLL REVEAL ===== */
 const io = new IntersectionObserver(entries => {
   entries.forEach(e => {
     if (e.isIntersecting) {
@@ -1095,7 +1062,7 @@ document.querySelectorAll(".rv").forEach(el => {
   RM ? el.classList.add("in") : io.observe(el);
 });
 
-/* ===== 5.4 COUNTDOWN ===== */
+/* ===== COUNTDOWN ===== */
 const T = new Date("2026-12-17T15:00:00+05:30").getTime();
 
 function tick() {
@@ -1116,7 +1083,7 @@ function tick() {
 tick();
 setInterval(tick,1000);
 
-/* ===== 5.5 CALENDAR ===== */
+/* ===== CALENDAR ICS ===== */
 $("#ics").addEventListener("click",() => {
   const ev = [
     ["Wedding","20261217T093000Z","20261217T123000Z"],
@@ -1138,7 +1105,6 @@ $("#ics").addEventListener("click",() => {
 
   a.href = url;
   a.download = "naveen-indu-wedding.ics";
-
   document.body.appendChild(a);
   a.click();
   a.remove();
@@ -1146,7 +1112,7 @@ $("#ics").addEventListener("click",() => {
   setTimeout(() => URL.revokeObjectURL(url),1000);
 });
 
-/* ===== 5.7 LIGHTBOX ===== */
+/* ===== LIGHTBOX ===== */
 const imgs = [...document.querySelectorAll("#gal img")];
 const lb = $("#lb");
 let cur = 0;
@@ -1180,7 +1146,6 @@ addEventListener("keydown",e => {
 });
 
 let sx = 0;
-
 lb.addEventListener("touchstart",e => {
   sx = e.touches[0].clientX;
 },{passive:true});
@@ -1190,13 +1155,10 @@ lb.addEventListener("touchend",e => {
   if (Math.abs(d)>50) show(cur+(d<0?1:-1));
 },{passive:true});
 
-/* ===== 5.8 WEDDING WISH BALLOONS ===== */
-
+/* ===== WEDDING WISH BALLOONS ===== */
 const wishBtn = $("#lantern");
 
 wishBtn.addEventListener("click",() => {
-
-  // Show congratulations message
   let toast = $("#wishToast");
 
   if (!toast) {
@@ -1208,105 +1170,51 @@ wishBtn.addEventListener("click",() => {
 
     toast.innerHTML = `
       <h3>💕 Congratulations! 💕</h3>
-      <p>
-        Wishing Naveen & Indu a lifetime of
-        love, laughter and togetherness.
-        May your journey be filled with endless happiness!
-      </p>
-      <p style="color:#B3123A;margin-top:8px">
-        ✨ With love and best wishes ✨
-      </p>
+      <p>Wishing Naveen & Indu a lifetime of love, laughter and togetherness. May your journey be filled with endless happiness!</p>
+      <p style="color:#B3123A;margin-top:8px">✨ With love and best wishes ✨</p>
     `;
 
     document.body.appendChild(toast);
   }
 
   toast.classList.add("show");
-
   clearTimeout(window.wishToastTimer);
 
   window.wishToastTimer = setTimeout(() => {
     toast.classList.remove("show");
   },5000);
 
-  // Respect reduced-motion preference
   if (RM) return;
 
-  // Create a floating hot-air balloon
   const balloon = document.createElement("div");
-
   balloon.className = "wish-balloon";
-
-  balloon.style.setProperty(
-    "--x",
-    (10 + Math.random()*75) + "%"
-  );
+  balloon.style.setProperty("--x", (10 + Math.random()*75) + "%");
 
   balloon.innerHTML = `
     <div class="balloon-art">
-      <svg viewBox="0 0 120 180"
-           xmlns="http://www.w3.org/2000/svg">
-
-        <path d="M60 5
-          C25 5 8 30 12 60
-          C15 85 42 105 60 112
-          C78 105 105 85 108 60
-          C112 30 95 5 60 5Z"
-          fill="#B3123A"
-          stroke="#C9962B"
-          stroke-width="2"/>
-
-        <path d="M60 7 C43 35 40 75 60 112"
-          fill="none"
-          stroke="#F2B01E"
-          stroke-width="7"/>
-
-        <path d="M60 7 C77 35 80 75 60 112"
-          fill="none"
-          stroke="#FFF1C9"
-          stroke-width="6"/>
-
-        <circle cx="60" cy="55" r="13"
-          fill="#F2B01E"/>
-
-        <path d="M60 45 L68 55 L60 65 L52 55Z"
-          fill="#B3123A"/>
-
-        <path d="M42 104 L48 130 M78 104 L72 130"
-          stroke="#C9962B"
-          stroke-width="2"
-          fill="none"/>
-
-        <path d="M43 128 L77 128 L72 148 L48 148Z"
-          fill="#A66B32"
-          stroke="#70451E"
-          stroke-width="2"/>
-
-        <path d="M48 135 H72"
-          stroke="#F2B01E"
-          stroke-width="3"/>
-
-        <path d="M60 118 Q48 109 58 100 Q55 112 65 113Z"
-          fill="#F2B01E"/>
-
+      <svg viewBox="0 0 120 180" xmlns="http://www.w3.org/2000/svg">
+        <path d="M60 5 C25 5 8 30 12 60 C15 85 42 105 60 112 C78 105 105 85 108 60 C112 30 95 5 60 5Z" fill="#B3123A" stroke="#C9962B" stroke-width="2"/>
+        <path d="M60 7 C43 35 40 75 60 112" fill="none" stroke="#F2B01E" stroke-width="7"/>
+        <path d="M60 7 C77 35 80 75 60 112" fill="none" stroke="#FFF1C9" stroke-width="6"/>
+        <circle cx="60" cy="55" r="13" fill="#F2B01E"/>
+        <path d="M60 45 L68 55 L60 65 L52 55Z" fill="#B3123A"/>
+        <path d="M42 104 L48 130 M78 104 L72 130" stroke="#C9962B" stroke-width="2" fill="none"/>
+        <path d="M43 128 L77 128 L72 148 L48 148Z" fill="#A66B32" stroke="#70451E" stroke-width="2"/>
+        <path d="M48 135 H72" stroke="#F2B01E" stroke-width="3"/>
+        <path d="M60 118 Q48 109 58 100 Q55 112 65 113Z" fill="#F2B01E"/>
       </svg>
     </div>
   `;
 
-  // Add balloon to the webpage
   document.body.appendChild(balloon);
 
-  // Remove balloon after animation
   setTimeout(() => {
     balloon.remove();
   },10500);
-
 });
 
-/* ===== 5.9 PLANE PATH ===== */
+/* ===== PLANE TRAIL PATH ===== */
 const svg = $("#plane");
-const NS = "http://www.w3.org/2000/svg";
-
 let base,plane,clipR,len=0,H=0;
 
 function build() {
@@ -1338,24 +1246,12 @@ function build() {
         <rect id="clr" x="0" y="0" width="${W}" height="0"/>
       </clipPath>
     </defs>
-
-    <path id="pb" d="${d}" fill="none"
-      stroke="#C9962B" stroke-opacity=".4"
-      stroke-width="3.4" stroke-linecap="round"
-      stroke-dasharray="0 15"/>
-
-    <path d="${d}" fill="none"
-      stroke="#C9962B" stroke-opacity=".6"
-      stroke-width="2.5" stroke-dasharray="12 8"
-      clip-path="url(#cl)"/>
-
+    <path id="pb" d="${d}" fill="none" stroke="#C9962B" stroke-opacity=".4" stroke-width="3.4" stroke-linecap="round" stroke-dasharray="0 15"/>
+    <path d="${d}" fill="none" stroke="#C9962B" stroke-opacity=".6" stroke-width="2.5" stroke-dasharray="12 8" clip-path="url(#cl)"/>
     <g id="pl" opacity=".6">
-      <polygon points="-34,0 34,-4 -34,22 -22,6"
-        fill="#C9962B" transform="translate(0,-8)"/>
-      <polygon points="-34,0 34,-4 -22,6"
-        fill="#FFF6E0" transform="translate(0,-8)"/>
-      <path d="M-50 4c-4-6-12-4-8 2l8 8 8-8c4-6-4-8-8-2Z"
-        fill="#B3123A" transform="scale(.7) translate(-30,6)"/>
+      <polygon points="-34,0 34,-4 -34,22 -22,6" fill="#C9962B" transform="translate(0,-8)"/>
+      <polygon points="-34,0 34,-4 -22,6" fill="#FFF6E0" transform="translate(0,-8)"/>
+      <path d="M-50 4c-4-6-12-4-8 2l8 8 8-8c4-6-4-8-8-2Z" fill="#B3123A" transform="scale(.7) translate(-30,6)"/>
     </g>
   `;
 
@@ -1369,62 +1265,22 @@ function build() {
 
 let tk = false;
 
-// function move() {
-//   tk = false;
-//   if (!len) return;
-
-//   const py = scrollY + innerHeight*.42;
-//   const f = Math.min(1,Math.max(0,py/H));
-//   const L = len*f;
-
-//   const p = base.getPointAtLength(L);
-//   const q = base.getPointAtLength(Math.min(len,L+2));
-//   const a = Math.atan2(q.y-p.y,q.x-p.x)*180/Math.PI;
-
-//   plane.setAttribute(
-//     "transform",
-//     `translate(${p.x} ${p.y}) rotate(${a})`
-//   );
-
-//   clipR.setAttribute("height",p.y);
-// }
 function move() {
   tk = false;
   if (!len) return;
 
-  // Calculate the actual page scrolling progress
-  const maxScroll = Math.max(
-    1,
-    document.documentElement.scrollHeight - innerHeight
-  );
-
-  const progress = Math.min(
-    1,
-    Math.max(0, scrollY / maxScroll)
-  );
-
-  // Move the plane along the complete SVG path
+  const maxScroll = Math.max(1, document.documentElement.scrollHeight - innerHeight);
+  const progress = Math.min(1, Math.max(0, scrollY / maxScroll));
   const L = len * progress;
 
   const p = base.getPointAtLength(L);
-  const q = base.getPointAtLength(
-    Math.min(len, L + 2)
-  );
+  const q = base.getPointAtLength(Math.min(len, L + 2));
+  const angle = Math.atan2(q.y - p.y, q.x - p.x) * 180 / Math.PI;
 
-  // Rotate the plane according to its direction
-  const angle = Math.atan2(
-    q.y - p.y,
-    q.x - p.x
-  ) * 180 / Math.PI;
-
-  plane.setAttribute(
-    "transform",
-    `translate(${p.x} ${p.y}) rotate(${angle})`
-  );
-
-  // Reveal the dotted trail
+  plane.setAttribute("transform", `translate(${p.x} ${p.y}) rotate(${angle})`);
   clipR.setAttribute("height", p.y);
 }
+
 const hb = $("#hbg");
 
 addEventListener("scroll",() => {
@@ -1439,7 +1295,6 @@ addEventListener("scroll",() => {
 },{passive:true});
 
 let rt;
-
 addEventListener("resize",() => {
   clearTimeout(rt);
   rt = setTimeout(() => {
@@ -1453,12 +1308,12 @@ new ResizeObserver(() => {
   }
 }).observe(document.body);
 
-/* ===== 5.10-5.12 EFFECTS ===== */
+/* ===== PETALS & GLITTER PARTICLES ===== */
 function startFx() {
   if (RM) return;
 
-  const ph = innerWidth<600;
-  const np = ph?10:18;
+  const ph = innerWidth < 600;
+  const np = ph ? 10 : 18;
   const cols = ["#F2B01E","#B3123A","#E8761E","#B5136B"];
   const P = $("#petals");
 
@@ -1473,7 +1328,7 @@ function startFx() {
   }
 
   const G = $("#glitter");
-  const ng = ph?20:34;
+  const ng = ph ? 20 : 34;
 
   for (let i=0;i<ng;i++) {
     const e = document.createElement("i");
