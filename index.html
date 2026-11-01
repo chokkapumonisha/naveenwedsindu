@@ -16,6 +16,7 @@
   --paper:#FFFBEF;
   --green:#0F2E1A;
   --emerald:#1F4D2B;
+  --litegold: #ffe4aa;
   --marigold:#F2B01E;
   --gold:#C9962B;
   --ruby:#B3123A;
@@ -157,7 +158,7 @@ h2 {
   height: 100vh;
   z-index: 999;
   cursor: pointer;
-  background: radial-gradient(circle at center, #1b4d2e 0%, #0c2b18 60%, #071c0f 100%);
+  background: radial-gradient(circle at center, #e8d98a 0%, #dac784 60%, #e1d888 100%);
   overflow: hidden;
   transition: background-color 1.5s ease, opacity 1.5s cubic-bezier(0.4, 0, 0.2, 1);
   -webkit-tap-highlight-color: transparent;
@@ -167,7 +168,7 @@ h2 {
   content: "";
   position: absolute;
   inset: 12px;
-  border: 1.5px solid rgba(201, 150, 43, 0.5);
+  border: 1.5px solid rgba(71, 53, 15, 0.5);
   pointer-events: none;
   z-index: 10;
   transition: opacity 0.8s ease;
@@ -195,9 +196,9 @@ h2 {
 
 /* Full-scale image rendering */
 .split-wing .namam-img {
-  width: 95vw;
-  height: 80vh;
-  object-fit: contain;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
   display: block;
   filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.5));
 }
@@ -222,11 +223,11 @@ h2 {
   transition: opacity 0.6s ease, transform 0.6s ease;
 }
 .opener-meta2 {
-  bottom: 6vh;
+  top: 26vh;
 }
 
 .opener-meta1 {
-  top: 6vh;
+  top: 21vh;
 }
 
 .opener-top {
@@ -240,14 +241,14 @@ h2 {
 .opener-mantra {
   font-family: "Cormorant Garamond", serif;
   font-size: clamp(22px, 4.5vw, 34px);
-  color: #735c23;
+  color: #3e2e08;
   letter-spacing: 0.08em;
 }
 
 .opener-hint {
   font-size: 13px;
   letter-spacing: 0.25em;
-  color: var(--gold);
+  color:  var(--gold);
   margin-top: 14px;
   animation: pulse-hint 2s infinite ease-in-out;
 }
@@ -776,18 +777,18 @@ footer .names {
 <!-- ===== FULLPAGE SANKU CHAKRA NAMALU SPLIT OPENER ===== -->
 <div id="reveal" role="button" tabindex="0" aria-label="Tap to open invitation">
   <div class="opener-meta opener-meta1">
-    <p class="opener-mantra">Om Namo Venkatesaya</p>
+    <p class="opener-mantra">||Shree Ganeshaya Namah||</p>
   </div>
   <div class="split-curtain-container">
     
     <!-- LEFT HALF: Stretches across full screen, displays left half of image -->
     <div class="split-wing split-left">
-      <img src="namam.png" alt="Sacred Sanku Chakra Namam Left" class="namam-img">
+      <img src="image.jpg" alt="Sacred Sanku Chakra Namam Left" class="namam-img">
     </div>
 
     <!-- RIGHT HALF: Stretches across full screen, displays right half of image -->
     <div class="split-wing split-right">
-      <img src="namam.png" alt="Sacred Sanku Chakra Namam Right" class="namam-img">
+      <img src="image.jpg" alt="Sacred Sanku Chakra Namam Right" class="namam-img">
     </div>
 
   </div>
